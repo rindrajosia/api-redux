@@ -24,7 +24,7 @@ const reducer  = (state = initialState, action) =>  {
           recipes: action.payload,
           error: '',
         }
-    case FETCH_RECIPES_SUCCESS:
+    case FETCH_RECIPES_FAILURE:
       return {
         ...state,
         loading: false,

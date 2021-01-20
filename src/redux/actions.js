@@ -35,8 +35,8 @@ export const fetchRecipes = () =>  {
       }
       return response.json();
     })
-    .then((recipes) => {
-      dispatch(fetchRecipesSuccess(recipes));
+    .then((data) => {
+      dispatch(fetchRecipesSuccess(data.meals));
     })
     .catch((error) => {
       dispatch(fetchRecipesFailure(error));

@@ -6,7 +6,7 @@ const RecipeComponent = ({ recipeData, fetchRecipes }) => {
   useEffect (() => {
     fetchRecipes();
   }, [])
-
+ console.log(recipeData.recipes);
   return (
     recipeData.loading ? (
       <h2>Loading</h2>
@@ -20,7 +20,8 @@ const RecipeComponent = ({ recipeData, fetchRecipes }) => {
         </div>
       )
     )
-}
+  )
+};
 
 const mapStateToProps = state => {
   return {
@@ -28,9 +29,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchRecipes: () => dispatch(fetchRecipes)
+    fetchRecipes: () => dispatch(fetchRecipes())
   }
 }
 
