@@ -23,3 +23,23 @@ export const fetchRecipesFailure = error =>  {
     payload: error
   }
 }
+
+// fetch action creator
+export const fetchRecipes = () =>  {
+  return (dispatch) =>  {
+    dispatch(fetchRecipesRequest);
+    return fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) =>  {
+      if(!response.ok) {
+        throw new Error('Error - 404 not found')
+      }
+      return response.json();
+    })
+    .then((recipes) => {
+      dispatch(fetchRecipesSuccess(recipes));
+    })
+    .catch((error) => {
+      dispatch(fetchRecipesFailure(error));
+    })
+  }
+}
