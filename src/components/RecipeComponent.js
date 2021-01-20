@@ -1,41 +1,48 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchRecipes } from '../redux/actions';
+import { fetchRecipes, changeFilter } from '../redux/actions';
 
-const RecipeComponent = ({ recipeData, fetchRecipes }) => {
+import { getRecipeByFilter } from '../redux/selectors';
+import CategoryFilter from './CategoryFilter';
+
+const RecipeComponent = ({ recipeData, fetchRecipes, changeFilter }) => {
   useEffect (() => {
     fetchRecipes();
   }, [])
- console.log(recipeData.recipes);
+
+  const handleFilterChange = filter => {
+    changeFilter(filter);
+  };
+
   return (
-    recipeData.loading ? (
-      <h2>Loading</h2>
-    ) : recipeData.error ? (
-      <h2>{recipeData.error}</h2>
-    ) : (
-      recipeData && recipeData.recipes && recipeData.recipes.map(recipe =>
-        <div key={recipe.idMeal} className='tile'>
-          <h2>{recipe.strMeal}</h2>
-          <img src={recipe.strMealThumb} alt=''/>
-        </div>
-      )
-    )
+    <>
+      <div className="lesson-panel">
+        <CategoryFilter handleFilterChange={handleFilterChange} />
+      </div>
+
+        {recipeData.loading ? (
+          <h2>Loading</h2>
+        ) : recipeData.error ? (
+          <h2>{recipeData.error}</h2>
+        ) : (
+          recipeData && recipeData.recipes && recipeData.recipes.map(recipe =>
+            <div key={recipe.idMeal} className='tile'>
+              <h2>{recipe.strMeal}</h2>
+              <img src={recipe.strMealThumb} alt=''/>
+            </div>
+          )
+        )}
+    </>
   )
 };
 
 const mapStateToProps = state => {
-  return {
-    recipeData: state.recipe
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchRecipes: () => dispatch(fetchRecipes())
-  }
+  const { filter } = state;
+  const recipeData = getRecipeByFilter(state, filter);
+  return { recipeData };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchRecipes, changeFilter }
 )(RecipeComponent);

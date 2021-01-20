@@ -1,7 +1,8 @@
 import {
   FETCH_RECIPES_REQUEST,
   FETCH_RECIPES_SUCCESS,
-  FETCH_RECIPES_FAILURE
+  FETCH_RECIPES_FAILURE,
+  CHANGE_FILTER
 } from './actionTypes';
 
 export const fetchRecipesRequest = () =>  {
@@ -43,3 +44,10 @@ export const fetchRecipes = () =>  {
     })
   }
 }
+
+export const changeFilter = filter => ({
+  type: CHANGE_FILTER,
+  payload: {
+    filter,
+  },
+});
