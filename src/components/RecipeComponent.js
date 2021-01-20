@@ -8,7 +8,7 @@ import CategoryFilter from './CategoryFilter';
 const RecipeComponent = ({ recipeData, fetchRecipes, changeFilter }) => {
   useEffect (() => {
     fetchRecipes();
-  }, [])
+  }, [fetchRecipes])
 
   const handleFilterChange = filter => {
     changeFilter(filter);
